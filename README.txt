@@ -103,9 +103,7 @@ ARCHIVOS INCLUIDOS
 NOTA SOBRE LAS IMÁGENES
 -----------------------
 Las imágenes son ilustraciones vectoriales (SVG) creadas para el
-proyecto. Se pueden reemplazar por fotos reales usando el mismo nombre
-de archivo (por ejemplo imagenes/productos/p01.svg -> p01.jpg y cambiar
-la extensión en js/datos.js y en el HTML).
+proyecto.
 
 ENLACE DEL REPOSITORIO DE GITHUB
 ---------------------------------
