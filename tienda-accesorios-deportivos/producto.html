@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+  Nombre: Gerardo J. Medina (GJ)
+  Universidad: Northbridge University
+  Curso: NCBTO - 2026-5CC - WADE 1000L - 3663ONL
+  Número de estudiante: 2507056253
+  Evaluación final: Creación de un sitio web (Escenario: Tienda online)
+  Página: Detalle del producto
+
+  NOTAS DE ESTRUCTURA HTML5 (módulos 3 y 4):
+  - <header>  : logo, nombre de la tienda y navegación principal (<nav>).
+  - <main>    : contenido único de la página (solo hay un <main> por página).
+  - <section> : cada bloque temático del contenido, con su propio título.
+  - <article> : cada producto o noticia, porque se entiende por sí solo.
+  - <aside>   : contenido complementario (resumen del pedido, consejos).
+  - <footer>  : datos de la tienda, enlaces y suscripción al boletín.
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalle de un producto de Arena Sport.">
+    <title>Detalle del producto | Arena Sport</title>
+    <link rel="icon" type="image/svg+xml" href="imagenes/logo.svg">
+
+    <!-- Google Fonts: Oswald (títulos) e Inter (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 por CDN, cargado ANTES de mi CSS para poder sobrescribirlo -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Mi hoja de estilos con la identidad de la tienda -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <!-- HEADER semántico: marca + navegación -->
+    <header class="encabezado-sitio">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegación principal">
+            <div class="container">
+                <a class="navbar-brand marca" href="index.html">
+                    <img src="imagenes/logo.svg" alt="" width="36" height="36">
+                    <span>ARENA <b>SPORT</b></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="catalogo.html">Todo el catálogo</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="balones.html">Balones</a></li>
+                                <li><a class="dropdown-item" href="fitness.html">Fitness</a></li>
+                                <li><a class="dropdown-item" href="proteccion.html">Protección</a></li>
+                                <li><a class="dropdown-item" href="hidratacion.html">Hidratación y bolsos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="ofertas.html">Ofertas</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ayuda</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="envios.html">Envíos y devoluciones</a></li>
+                                <li><a class="dropdown-item" href="preguntas.html">Preguntas frecuentes</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                    </ul>
+                    <a class="btn btn-carrito" href="carrito.html" aria-label="Ver carrito">
+                        &#128722; Carrito <span class="badge" id="contador-carrito">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="contenido">
+        <section class="banner-pagina" aria-labelledby="titulo-pagina">
+            <div class="container">
+                <nav aria-label="Ruta de navegación"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Inicio</a></li><li class="breadcrumb-item"><a href="catalogo.html">Catálogo</a></li><li class="breadcrumb-item active" aria-current="page">Producto</li></ol></nav>
+                <h1 id="titulo-pagina">Detalle del producto</h1>
+                <p class="lead">Información completa, especificaciones y productos relacionados.</p>
+            </div>
+        </section>
+
+        <div class="container seccion">
+            <article id="detalle-producto" aria-live="polite">
+                <p class="text-center">Cargando producto...</p>
+            </article>
+            <noscript><p class="alert alert-warning">Esta página necesita JavaScript para mostrar el producto.</p></noscript>
+            <section class="mt-5" aria-labelledby="t-rel">
+                <h2 id="t-rel" class="titulo-seccion">También te puede interesar</h2>
+                <div class="row row-cols-2 row-cols-md-4 g-3" id="grid-relacionados"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal de detalle: se llena con JavaScript al hacer clic en un producto -->
+    <div class="modal fade" id="modal-producto" tabindex="-1" aria-labelledby="modal-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h4" id="modal-titulo">Producto</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5"><img id="modal-imagen" class="img-fluid rounded" src="" alt=""></div>
+                        <div class="col-md-7">
+                            <p class="etiqueta-cat" id="modal-cat"></p>
+                            <p id="modal-desc"></p>
+                            <ul id="modal-specs" class="specs"></ul>
+                            <p class="precio-grande" id="modal-precio"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="modal-enlace" class="btn btn-outline-light" href="producto.html">Ver página del producto</a>
+                    <button type="button" class="btn btn-acento" id="modal-agregar">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER semántico con boletín validado en tiempo real -->
+    <footer class="pie-sitio">
+        <div class="container">
+            <div class="row g-4">
+                <section class="col-md-4" aria-labelledby="pie-marca">
+                    <h2 class="h5" id="pie-marca">ARENA <b>SPORT</b></h2>
+                    <p>Accesorios deportivos para jugar, entrenar y llevar todo a la práctica.</p>
+                    <address>
+                        Calle Deportiva 123, San Juan, PR 00901<br>
+                        <a href="tel:+17875550142">(787) 555-0142</a><br>
+                        <a href="mailto:ventas@arenasport.example">ventas@arenasport.example</a>
+                    </address>
+                </section>
+                <nav class="col-6 col-md-2" aria-label="Tienda">
+                    <h2 class="h6">Tienda</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="catalogo.html">Catálogo</a></li>
+                        <li><a href="balones.html">Balones</a></li>
+                        <li><a href="fitness.html">Fitness</a></li>
+                        <li><a href="proteccion.html">Protección</a></li>
+                        <li><a href="hidratacion.html">Hidratación</a></li>
+                    </ul>
+                </nav>
+                <nav class="col-6 col-md-2" aria-label="Ayuda">
+                    <h2 class="h6">Ayuda</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="envios.html">Envíos</a></li>
+                        <li><a href="preguntas.html">Preguntas</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </nav>
+                <section class="col-md-4" aria-labelledby="pie-boletin">
+                    <h2 class="h6" id="pie-boletin">Boletín de ofertas</h2>
+                    <form id="form-boletin" class="validar" novalidate>
+                        <label for="boletin-correo" class="form-label">Correo electrónico</label>
+                        <div class="input-group has-validation">
+                            <input type="email" class="form-control" id="boletin-correo" name="correo" data-reglas="requerido|email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
+                            <button class="btn btn-acento" type="submit">Suscribirme</button>
+                            <div class="invalid-feedback"></div>
+                            <div class="valid-feedback">Correo válido.</div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <p class="derechos">&copy; 2026 Arena Sport — proyecto académico de Gerardo J. Medina, Northbridge University. Tienda ficticia con fines educativos.</p>
+        </div>
+    </footer>
+
+    <!-- Contenedor de notificaciones (toast) -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="zona-toast" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Bootstrap JS (menú, modal, acordeón, toast) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Mis scripts: cada archivo tiene una sola responsabilidad -->
+    <script src="js/datos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/carrusel.js"></script>
+    <script src="js/formulario.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

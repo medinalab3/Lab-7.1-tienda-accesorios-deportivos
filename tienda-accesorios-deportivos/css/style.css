@@ -1,0 +1,250 @@
+/* ==========================================================
+   ARENA SPORT — hoja de estilos propia
+   Autor: Gerardo J. Medina (GJ) · WADE 1000L
+   Se carga DESPUÉS de Bootstrap para poder sobrescribirlo.
+
+   ÍNDICE
+   1. Variables (identidad de marca)
+   2. Base y tipografía
+   3. Encabezado y navegación
+   4. Botones
+   5. Carrusel (JavaScript)
+   6. Secciones, banners y categorías
+   7. Tarjetas de producto (hover y resaltado)
+   8. Modal, carrito y paneles
+   9. Formularios (validación en tiempo real)
+   10. Pie de página
+   11. Diseño responsivo (móvil, tablet, escritorio)
+   ========================================================== */
+
+/* 1. VARIABLES — un solo lugar para cambiar la identidad */
+:root {
+    --fondo: #0b1220;
+    --fondo-2: #111b2e;
+    --superficie: #16233b;
+    --borde: #243452;
+    --texto: #e8edf5;
+    --texto-suave: #9fb0c8;
+    --acento: #ff6b1a;
+    --acento-oscuro: #e0560a;
+    --lima: #a3e635;
+    --radio: 14px;
+    --sombra: 0 10px 24px rgba(0, 0, 0, .35);
+    --fuente-titulo: "Oswald", "Arial Narrow", sans-serif;
+    --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+/* 2. BASE */
+body {
+    font-family: var(--fuente-texto);
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+h1, h2, h3, h4, h5, .marca { font-family: var(--fuente-titulo); letter-spacing: .02em; }
+h1 { font-weight: 700; text-transform: uppercase; font-size: clamp(2rem, 5vw, 3rem); }
+a { color: var(--lima); }
+a:hover { color: #c6f26b; }
+img { max-width: 100%; height: auto; }
+
+/* Enlace para saltar al contenido (accesibilidad con teclado) */
+.saltar-contenido {
+    position: absolute; left: -999px; top: 8px; z-index: 2000;
+    background: var(--acento); color: #0b1220; padding: 8px 14px; border-radius: 8px;
+}
+.saltar-contenido:focus { left: 8px; }
+
+/* Foco visible para quien navega con teclado */
+:focus-visible { outline: 3px solid var(--lima); outline-offset: 2px; }
+
+/* 3. ENCABEZADO */
+.encabezado-sitio {
+    position: sticky; top: 0; z-index: 1030;
+    background: rgba(11, 18, 32, .95);
+    border-bottom: 2px solid var(--acento);
+    backdrop-filter: blur(6px);
+}
+.marca { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; text-transform: uppercase; }
+.marca b { color: var(--acento); }
+.navbar .nav-link { font-weight: 600; color: var(--texto-suave); }
+.navbar .nav-link:hover, .navbar .nav-link.active { color: #fff; }
+.navbar .nav-link.active { box-shadow: inset 0 -3px 0 var(--acento); }
+.dropdown-menu { background: var(--superficie); border: 1px solid var(--borde); }
+.dropdown-item { color: var(--texto); }
+.dropdown-item:hover, .dropdown-item:focus { background: var(--acento); color: #0b1220; }
+.btn-carrito { background: transparent; border: 2px solid var(--acento); color: #fff; font-weight: 600; }
+.btn-carrito:hover { background: var(--acento); color: #0b1220; }
+.btn-carrito .badge { background: var(--lima); color: #0b1220; }
+
+/* 4. BOTONES */
+.btn-acento { background: var(--acento); border-color: var(--acento); color: #0b1220; font-weight: 700; }
+.btn-acento:hover, .btn-acento:focus { background: var(--acento-oscuro); border-color: var(--acento-oscuro); color: #fff; }
+.btn-oscuro { background: #0b1220; color: #fff; font-weight: 700; border: 0; }
+.btn-oscuro:hover { background: #000; color: var(--lima); }
+
+/* 5. CARRUSEL — estilos del carrusel hecho con JavaScript */
+.carrusel { position: relative; overflow: hidden; background: #000; }
+.carrusel-pista { position: relative; aspect-ratio: 12 / 5; min-height: 260px; }
+.slide {
+    position: absolute; inset: 0; margin: 0;
+    opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility .7s;
+}
+.slide.activo { opacity: 1; visibility: visible; z-index: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; object-position: 80% center; display: block; }
+/* Degradado para que el texto siempre se lea sobre la imagen */
+.slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11, 18, 32, .85) 0%, rgba(11, 18, 32, .35) 55%, transparent 100%); }
+.slide figcaption { z-index: 2; }
+.slide figcaption {
+    position: absolute; left: clamp(16px, 6vw, 80px); bottom: clamp(16px, 8%, 60px);
+    max-width: 520px; text-shadow: 0 2px 8px rgba(0, 0, 0, .6);
+}
+.slide figcaption h2 { font-size: clamp(1.4rem, 4vw, 2.6rem); text-transform: uppercase; margin-bottom: 4px; }
+.slide figcaption p { margin-bottom: 12px; }
+.carrusel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 46px; height: 46px; border-radius: 50%; border: 0;
+    background: rgba(11, 18, 32, .65); color: #fff; font-size: 1.1rem; cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+.carrusel-btn:hover { background: var(--acento); color: #0b1220; transform: translateY(-50%) scale(1.08); }
+.carrusel-btn.anterior { left: 12px; }
+.carrusel-btn.siguiente { right: 12px; }
+.carrusel-puntos { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 8px; }
+.carrusel-puntos button {
+    width: 12px; height: 12px; padding: 0; border-radius: 50%;
+    border: 2px solid #fff; background: transparent; cursor: pointer;
+}
+.carrusel-puntos button[aria-selected="true"] { background: var(--acento); border-color: var(--acento); transform: scale(1.2); }
+.carrusel-pausa {
+    position: absolute; top: 10px; right: 12px; z-index: 3; border: 0; border-radius: 8px;
+    background: rgba(11, 18, 32, .65); color: #fff; padding: 4px 10px; font-size: .8rem; cursor: pointer;
+}
+.carrusel-pausa:hover { background: var(--acento); color: #0b1220; }
+
+/* 6. SECCIONES */
+.seccion { padding-top: 48px; padding-bottom: 8px; }
+.titulo-seccion {
+    font-size: clamp(1.4rem, 3vw, 2rem); text-transform: uppercase; margin-bottom: 20px;
+    padding-left: 14px; border-left: 6px solid var(--acento);
+}
+.banner-pagina {
+    background: linear-gradient(120deg, var(--fondo-2), #1d2c4a);
+    padding: 36px 0; border-bottom: 1px solid var(--borde);
+}
+.breadcrumb { --bs-breadcrumb-divider-color: var(--texto-suave); margin-bottom: 8px; font-size: .9rem; }
+.breadcrumb-item.active { color: var(--texto-suave); }
+.ayuda-interaccion { color: var(--texto-suave); font-size: .9rem; }
+.beneficio { background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px; height: 100%; text-align: center; }
+.beneficio > span { font-size: 1.8rem; }
+.beneficio p { margin: 0; color: var(--texto-suave); font-size: .9rem; }
+.tarjeta-categoria {
+    display: block; height: 100%; text-align: center; text-decoration: none; color: var(--texto);
+    background: var(--superficie); border: 1px solid var(--borde); border-top: 5px solid var(--color-cat);
+    border-radius: var(--radio); padding: 18px 12px; transition: transform .2s, box-shadow .2s;
+}
+.tarjeta-categoria:hover { transform: translateY(-6px); box-shadow: var(--sombra); color: #fff; }
+.tarjeta-categoria img { width: 96px; height: 96px; border-radius: 50%; margin-bottom: 8px; }
+.tarjeta-categoria p { font-size: .85rem; color: var(--texto-suave); margin: 0; }
+.franja-ofertas { background: var(--acento); color: #0b1220; margin-top: 56px; padding: 36px 0; }
+.franja-ofertas h2 { text-transform: uppercase; }
+
+/* 7. TARJETAS DE PRODUCTO */
+.card.producto {
+    background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+    overflow: hidden; position: relative; cursor: pointer; color: var(--texto);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, opacity .25s ease, filter .25s ease;
+}
+/* Efecto hover con CSS puro */
+.card.producto:hover, .card.producto:focus-visible {
+    transform: translateY(-6px); border-color: var(--acento); box-shadow: 0 14px 28px rgba(255, 107, 26, .25);
+}
+/* Resaltado con JavaScript: la tarjeta activa destaca y las demás se atenúan */
+.card.producto.resaltado { border-color: var(--lima); box-shadow: 0 0 0 3px rgba(163, 230, 53, .45), 0 14px 28px rgba(0, 0, 0, .5); transform: translateY(-8px) scale(1.02); z-index: 2; }
+.hay-resaltado .card.producto:not(.resaltado) { opacity: .55; filter: saturate(.6); }
+.card.producto .card-img-top { background: #0b1220; }
+.etiqueta-cat { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--lima); margin-bottom: 4px; }
+.card-title { color: #fff; }
+.precio { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; }
+.precio-anterior { color: var(--texto-suave); text-decoration: line-through; font-weight: 400; font-size: .9rem; margin-left: 6px; }
+.precio-grande { font-family: var(--fuente-titulo); font-size: 2rem; color: var(--acento); }
+.insignia-oferta {
+    position: absolute; top: 10px; left: 10px; z-index: 2; background: var(--acento); color: #0b1220;
+    font-weight: 700; font-size: .7rem; padding: 3px 9px; border-radius: 999px; letter-spacing: .06em;
+}
+
+/* 8. MODAL, CARRITO Y PANELES */
+.modal-content { background: var(--superficie); border: 1px solid var(--borde); color: var(--texto); }
+.modal-header, .modal-footer { border-color: var(--borde); }
+.specs { padding-left: 1.1rem; color: var(--texto-suave); }
+.panel-filtros, .panel-resumen, .bloque-texto {
+    background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); padding: 20px;
+}
+.panel-consejo {
+    background: var(--superficie); border: 1px solid var(--borde); border-left: 6px solid var(--color-cat, var(--acento));
+    border-radius: var(--radio); padding: 20px;
+}
+.panel-resumen { position: sticky; top: 92px; }
+.resumen { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin-bottom: 12px; }
+.resumen dd { margin: 0; text-align: right; }
+.resumen .total { font-family: var(--fuente-titulo); font-size: 1.4rem; border-top: 1px solid var(--borde); padding-top: 8px; color: var(--lima); }
+.item-carrito { display: grid; grid-template-columns: 80px 1fr auto; gap: 14px; align-items: center; background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); padding: 12px; margin-bottom: 12px; }
+.item-carrito img { width: 80px; height: 80px; border-radius: 10px; }
+.item-carrito h3 { font-size: 1rem; margin: 0 0 4px; }
+.cantidad { display: inline-flex; align-items: center; gap: 6px; }
+.cantidad button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--borde); background: #0b1220; color: #fff; }
+.cantidad button:hover { background: var(--acento); color: #0b1220; }
+.carrito-vacio { text-align: center; padding: 48px 16px; background: var(--superficie); border: 1px dashed var(--borde); border-radius: var(--radio); }
+.accordion { --bs-accordion-bg: var(--superficie); --bs-accordion-color: var(--texto); --bs-accordion-border-color: var(--borde); --bs-accordion-btn-bg: var(--superficie); --bs-accordion-btn-color: #fff; --bs-accordion-active-bg: #1d2c4a; --bs-accordion-active-color: var(--lima); --bs-accordion-btn-focus-box-shadow: 0 0 0 .2rem rgba(163, 230, 53, .35); }
+.accordion-button::after { filter: invert(1); }
+.table { --bs-table-bg: var(--superficie); }
+.table caption { color: var(--texto-suave); }
+.toast { background: var(--superficie); color: var(--texto); border: 1px solid var(--lima); }
+
+/* 9. FORMULARIOS */
+.form-control, .form-select { background-color: #0b1220; border-color: var(--borde); color: var(--texto); }
+.form-control:focus, .form-select:focus { background-color: #0b1220; color: #fff; border-color: var(--acento); box-shadow: 0 0 0 .2rem rgba(255, 107, 26, .3); }
+.form-control::placeholder { color: #667a99; }
+.form-text { color: var(--texto-suave); }
+.form-control.is-valid, .form-select.is-valid { border-color: var(--lima); }
+.form-control.is-invalid, .form-select.is-invalid { border-color: #ff5c5c; }
+.invalid-feedback { color: #ff8a8a; }
+.valid-feedback { color: var(--lima); }
+.contador-alerta { color: #ff8a8a; font-weight: 700; }
+
+/* 10. PIE DE PÁGINA */
+.pie-sitio { background: #070c16; border-top: 3px solid var(--acento); margin-top: 64px; padding: 40px 0 16px; color: var(--texto-suave); }
+.pie-sitio h2 { color: #fff; }
+.pie-sitio a { color: var(--texto-suave); text-decoration: none; }
+.pie-sitio a:hover { color: var(--lima); text-decoration: underline; }
+.derechos { text-align: center; font-size: .8rem; border-top: 1px solid var(--borde); margin-top: 28px; padding-top: 14px; }
+
+/* 11. DISEÑO RESPONSIVO
+   Móvil primero con la cuadrícula de Bootstrap; estas media queries
+   ajustan lo que Bootstrap no cubre. */
+@media (max-width: 991.98px) {                 /* tablet y menor */
+    .panel-resumen { position: static; }
+    .navbar-collapse { padding-bottom: 12px; }
+    .btn-carrito { margin-top: 8px; }
+}
+@media (max-width: 767.98px) {                 /* móvil grande */
+    .carrusel-pista { aspect-ratio: auto; height: 340px; }
+    .slide figcaption { right: 16px; }
+    .slide img { object-position: 85% center; }
+    .slide figcaption p { display: none; }
+    .seccion { padding-top: 32px; }
+}
+@media (max-width: 575.98px) {                 /* móvil pequeño */
+    .item-carrito { grid-template-columns: 64px 1fr; }
+    .item-carrito > :last-child { grid-column: 1 / -1; }
+    .item-carrito img { width: 64px; height: 64px; }
+    .carrusel-btn { width: 38px; height: 38px; }
+    .marca { font-size: 1.15rem; }
+}
+@media (min-width: 1400px) {                   /* escritorio ancho */
+    .container { max-width: 1280px; }
+}
+
+/* Respeto a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
