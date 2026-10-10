@@ -109,7 +109,7 @@ la extensión en js/datos.js y en el HTML).
 
 ENLACE DEL REPOSITORIO DE GITHUB
 ---------------------------------
-https://github.com/medinalab3/tienda-accesorios-deportivos
+https://github.com/medinalab3/Lab-7.1-tienda-accesorios-deportivos
 
 CÓMO VISUALIZAR EL PROYECTO
 ---------------------------
